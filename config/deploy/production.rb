@@ -32,7 +32,9 @@ server "mail.origon.co", user: "sinatra", roles: %w{api}
 set :application, 'origon-mailer'
 set :branch, 'master'
 set :deploy_to, '/home/sinatra/origon-mailer'
-set :repo_url, 'git@github.com/andersblehr/origon-mailer'
+set :linked_files, ['.env']
+set :repo_url, 'git@github.com:andersblehr/origon-mailer'
+set :ssh_options, { :forward_agent => true }
 
 
 
