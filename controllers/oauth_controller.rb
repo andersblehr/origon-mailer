@@ -17,7 +17,7 @@ class OAuthController < Sinatra::Base
     halt 403 if invalid_grant_type?(params[:grant_type])
     halt 403 if invalid_credentials?(params[:client_id], params[:client_secret])
     
-    content_type(:json)
+    content_type :json
     now = Time.now.to_i
     jwt_expires_in = ENV['JWT_EXPIRES_IN'].to_i
     
@@ -29,7 +29,7 @@ class OAuthController < Sinatra::Base
     
     {
       access_token: JWT.encode(jwt_payload, ENV['JWT_SECRET'], 'HS256'),
-      expires_in: jwt_expires_in
+      expires_in: jwt_expires_in,
     }.to_json
   end
   
