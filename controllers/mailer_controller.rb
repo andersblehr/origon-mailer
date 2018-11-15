@@ -12,6 +12,8 @@ class MailerController < Sinatra::Base
   
   post '' do
     begin
+      content_type :json
+      
       halt 400 if request.content_type != 'application/json'
       request_body = JSON.parse(request.body.read, :symbolize_names => true)
       halt 400 if !request_body[:from] && !ENV['MAILER_FROM']
@@ -21,14 +23,16 @@ class MailerController < Sinatra::Base
 
       Pony.mail({
         :to => request_body[:to],
-        :from => ENV['MAILER_FROM'],
+        :from => request_body['from'] || ENV['MAILER_FROM'],
         :subject => request_body[:subject],
         :body => request_body[:body],
       })
-      
-      status 201
     rescue JSON::ParserError
       halt 400
+    rescue => e
+      halt 500, { message: "#{e.class.name}: " + e.message }.to_json
+    else
+      status 201
     end
   end
 end
