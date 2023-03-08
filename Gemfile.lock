@@ -28,7 +28,7 @@ GEM
     net-ssh (5.0.2)
     pony (1.12)
       mail (>= 2.0)
-    rack (2.1.4)
+    rack (2.1.4.3)
     rack-protection (2.0.4)
       rack
     rake (13.0.1)
